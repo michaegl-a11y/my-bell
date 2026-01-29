@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>One Important Question ❤️</title>
+
+    <style>
+        /* ================= Base Styles ================= */
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+        
+        body {
+            background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        
+        .code-question {
+            font-family: "Courier New", monospace;
+            color: #7fffd4;
+            font-size: 28px;
+            /* same as .code */
+            white-space: pre;
+            margin-top: 20px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .container {
+            max-width: 720px;
+            width: 95%;
+            padding: 30px;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.7;
+            opacity: 0.9;
+            animation: slideUp 1.6s ease;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        button {
+            background: #ff5e8e;
+            border: none;
+            color: white;
+            padding: 15px 28px;
+            font-size: 18px;
+            border-radius: 30px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 10px 25px rgba(255, 94, 142, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 94, 142, 0.5);
+        }
+        
+        .heart {
+            font-size: 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .code {
+            font-family: "Courier New", monospace;
+            color: #7fffd4;
+            font-size: 28px;
+            white-space: pre;
+            margin-bottom: 10px;
+        }
+        /* ================= Animations ================= */
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.4;
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        /* ================= Loader ================= */
+        
+        .loader {
+            opacity: 0.8;
+            animation: pulse 2s infinite;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        /* ================= Video Styles ================= */
+        
+        .video-wrapper {
+            position: relative;
+            display: block;
+            width: 100%;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+        
+        .video-wrapper video {
+            width: 100%;
+            height: auto;
+            border-radius: 18px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45);
+        }
+        
+        .video-controls {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .video-wrapper:hover .video-controls,
+        .video-wrapper:active .video-controls {
+            opacity: 1;
+        }
+        
+        .video-controls button {
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+        }
+        /* ================= Voice  ================= */
+        
+        .audio {
+            display: flex;
+            /* hide until message finishes */
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            animation: fadeIn 1.2s ease;
+        }
+        
+        .audio-text {
+            font-size: 16px;
+            opacity: 0.85;
+        }
+        /* ================= Confetti ================= */
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: pink;
+            animation: fall 3s linear forwards;
+        }
+        /* ================= Mobile Responsive ================= */
+        
+        @media (max-width:768px) {
+            h1 {
+                font-size: 32px;
+            }
+            p {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+            .question {
+                font-size: 28px;
+            }
+            button {
+                padding: 12px 20px;
+                font-size: 16px;
+                margin: 8px;
+            }
+            .heart {
+                font-size: 26px;
+            }
+            .code {
+                font-size: 20px;
+            }
+            .video-wrapper {
+                max-width: 100%;
+            }
+            .play-btn {
+                width: 56px;
+                height: 56px;
+                font-size: 22px;
+                margin-right: 8px;
+            }
+            .audio-text {
+                font-size: 14px;
+            }
+            .code-question {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width:480px) {
+            h1 {
+                font-size: 28px;
+            }
+            p {
+                font-size: 14px;
+            }
+            .question {
+                font-size: 24px;
+            }
+            button {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+            .heart {
+                font-size: 22px;
+            }
+            .code {
+                font-size: 18px;
+            }
+            .play-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            .audio-text {
+                font-size: 13px;
+            }
+            .video-controls button {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+            .code-question {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+    <source src="Young_Thug_ft_6LACK_-_Ashin_The_Blunt_360media.com.ng.mp3" type="audio/mpeg">
+  </audio>
+
+    <!-- ================= Main Screen ================= -->
+    <div class="container" id="main">
+        <div class="loader">One important request pending.</div>
+        <h1 id="typedName"></h1>
+        <p>
+            115 days ago, something beautiful started for me.<br/> And somehow, every day since then,<br/> you’ve made life feel a little warmer.<br/><br/> You’re soft, you’re playful,<br/> and you have this way of making my heart feel calm and excited
+            at the same time.<br/><br/> So instead of asking the usual way,<br/> I thought I’d do what I do best<br/> and build something just for you.
+        </p>
+
+        <div class="question code-question" id="techQuestion"></div>
+
+        <div class="buttons">
+            <button onclick="accept()">Yes ❤️</button>
+            <button onclick="accept()">Yes, obviously 😌</button>
+        </div>
+        <div class="heart" onclick="secret()">❤️</div>
+    </div>
+
+    <!-- ================= Video Screen ================= -->
+    <div class="container hidden" id="videoScreen">
+        <h1>Some of our favorite moments 🎥</h1>
+        <div class="video-wrapper">
+            <video id="memoryVideo" muted playsinline>
+        <source src="isabelle.MP4" type="video/mp4" />
+      </video>
+            <div class="video-controls">
+                <button onclick="togglePlay()" id="playPauseBtn">⏸</button>
+                <button onclick="skipVideo()">⏭ Skip</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Message Screen ================= -->
+    <div class="container hidden" id="voiceScreen">
+        <h1>Just one more thing 💌</h1>
+
+        <div class="audio">
+            <button class="play-btn" id="fakePlayBtn">▶</button>
+            <span class="audio-text">Play message</span>
+        </div>
+
+        <p class="final-message" id="messageText"></p>
+
+        <div class="heart">❤️</div>
+    </div>
+
+
+
+    <!-- ================= Account Screen ================= -->
+    <div class="container hidden" id="accountScreen">
+        <h1>A little surprise for you 🎁</h1>
+        <p class="final-message">
+            This is just a small way of saying thank you<br/> for being you and choosing me.<br/><br/>
+
+            <strong>Bank:</strong> MONIE POINT<br/>
+            <strong>Account Number:</strong> 5408933106<br/>
+            <strong>Name:</strong> UFUOMA OJO
+        </p>
+
+        <div class="buttons">
+            <button onclick="finish()">Okay 🥰</button>
+        </div>
+    </div>
+
+
+
+    <!-- ================= Final Screen ================= -->
+    <div class="container hidden" id="finalScreen">
+        <h1>Success! 🎉</h1>
+        <p>
+            50,000 Naira has been sent.<br/> You should receive it within 24 hours.
+        </p>
+
+    </div>
+
+
+    <!-- ================= JS ================= -->
+    <script>
+        /* ---------- Background Music ---------- */
+        const bgMusic = document.getElementById("bgMusic");
+        const typedEl = document.getElementById("typedName");
+        document.body.addEventListener("click", () => {
+            bgMusic.volume = 0.6;
+            bgMusic.play().catch(() => {});
+        }, {
+            once: true
+        });
+
+        /* ---------- Typing Animation ---------- */
+        const nameText = ['> initializing_user("Isabelle");', '> user_loaded ✔'];
+        let line = 0,
+            char = 0;
+        typedEl.classList.add("code");
+
+        function typeCode() {
+            if (line < nameText.length) {
+                if (char < nameText[line].length) {
+                    typedEl.textContent += nameText[line][char++];
+                    setTimeout(typeCode, 50);
+                } else {
+                    typedEl.textContent += '\n';
+                    line++;
+                    char = 0;
+                    setTimeout(typeCode, 400);
+                }
+            } else {
+                setTimeout(() => {
+                    typedEl.classList.remove("code");
+                    typedEl.textContent = "Hey, Isabelle 👋🏽";
+                }, 800);
+            }
+        }
+        typeCode();
+
+        /* ---------- Message typing animation ---------- */
+        const messageText = [
+            "I don’t know how to explain it perfectly,\n",
+            "but being with you feels right.\n\n",
+            "You have this radiant energy around you,\n",
+            "I’m really grateful for you,\n",
+            "and I just wanted you to know that."
+        ];
+
+
+
+        const messageEl = document.getElementById("messageText");
+        let msgLine = 0;
+        let msgChar = 0;
+
+        function typeMessage() {
+            document.querySelector(".audio").style.display = "none";
+            if (msgLine < messageText.length) {
+                if (msgChar < messageText[msgLine].length) {
+                    // THIS PART CONVERTS \n INTO <br>
+                    const nextChar = messageText[msgLine][msgChar++];
+                    if (nextChar === "\n") {
+                        messageEl.innerHTML += "<br>";
+                    } else {
+                        messageEl.innerHTML += nextChar;
+                    }
+                    setTimeout(typeMessage, 40);
+                } else {
+                    msgLine++;
+                    msgChar = 0;
+                    setTimeout(typeMessage, 200);
+                }
+            } else {
+                // message complete
+                showAccountScreen();
+            }
+        }
+
+        // ---------- Show message screen + start typing ----------
+        function showVoiceScreen() {
+            document.getElementById("videoScreen").classList.add("hidden");
+            document.getElementById("voiceScreen").classList.remove("hidden");
+
+            // typing will start only when button is clicked
+        }
+
+
+
+        function showPlayButton() {
+            document.querySelector(".audio").style.display = "flex";
+        }
+
+        /* ---------- Accept Flow ---------- */
+        function accept() {
+            document.getElementById("main").classList.add("hidden");
+            document.getElementById("videoScreen").classList.remove("hidden");
+            confetti();
+            const video = document.getElementById("memoryVideo");
+            video.play().catch(() => {});
+            video.onended = showVoiceScreen;
+        }
+
+        function skipVideo() {
+            const video = document.getElementById("memoryVideo");
+            video.pause();
+            showVoiceScreen();
+        }
+
+        /* ---------- Video Controls ---------- */
+        function togglePlay() {
+            const video = document.getElementById("memoryVideo");
+            const btn = document.getElementById("playPauseBtn");
+            if (video.paused) {
+                video.play();
+                btn.textContent = "⏸";
+            } else {
+                video.pause();
+                btn.textContent = "▶";
+            }
+        }
+
+
+        /* ---------- Confetti ---------- */
+        function confetti() {
+            for (let i = 0; i < 80; i++) {
+                const piece = document.createElement("div");
+                piece.className = "confetti";
+                piece.style.left = Math.random() * 100 + "vw";
+                piece.style.background = ["#ff5e8e", "#ffd1dc", "#fff"][Math.floor(Math.random() * 3)];
+                piece.style.animationDuration = 2 + Math.random() * 2 + "s";
+                document.body.appendChild(piece);
+                setTimeout(() => piece.remove(), 4000);
+            }
+        }
+
+        function secret() {
+            alert("PS: You’re my favorite notification 💙");
+        }
+
+
+
+        function showAccountScreen() {
+            document.getElementById("voiceScreen").classList.add("hidden");
+            document.getElementById("accountScreen").classList.remove("hidden");
+        }
+
+        function finish() {
+            document.getElementById("accountScreen").classList.add("hidden");
+            document.getElementById("finalScreen").classList.remove("hidden");
+        }
+
+
+        // When user confirms
+        function confirmAccount() {
+            document.getElementById("accountScreen").classList.add("hidden");
+            document.getElementById("finalScreen").classList.remove("hidden");
+        }
+
+        // Optional: If she clicks "No", you can either go back to voice screen or show a message
+        function denyAccount() {
+            alert("Please review your account details and try again.");
+        }
+
+        // Typing for the question
+        const questionText = ['> Will you be my Valentine? ❤️'];
+        const questionEl = document.getElementById("techQuestion");
+        let qChar = 0;
+
+        function typeQuestion() {
+            if (qChar < questionText[0].length) {
+                questionEl.textContent += questionText[0][qChar++];
+                setTimeout(typeQuestion, 50);
+            }
+        }
+
+        // Start typing question after name finishes
+        setTimeout(() => {
+            typeQuestion();
+        }, (nameText.join("\n").length * 50) + 600); // delay based on name typing
+
+        //  Wait for page to load before adding click listener ----------
+        window.onload = function() {
+            document.getElementById("fakePlayBtn").addEventListener("click", function() {
+                this.disabled = true;
+                typeMessage();
+            });
+        }
+    </script>
+
+</body>
+
+</html>
